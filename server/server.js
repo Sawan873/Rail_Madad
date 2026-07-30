@@ -35,6 +35,7 @@ const getReadableUptime = () => {
 const allowedOrigins = [
   "https://rail-madad-erp.vercel.app",
   "https://rail-madad-green.vercel.app",
+  "http://rail-madad-delta.vercel.app",
   
   process.env.FRONTEND_URL,
 ].filter(Boolean);
