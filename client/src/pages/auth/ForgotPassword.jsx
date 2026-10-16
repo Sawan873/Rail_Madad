@@ -4,8 +4,10 @@ import { AuthLayout } from '../../components/layout'
 import { InputField } from '../../components/common'
 import { api } from '../../services/api'
 import Icon from '../../components/common/Icon'
+import { useTranslation } from 'react-i18next'
 
 export default function ForgotPassword() {
+  const { t } = useTranslation()
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
@@ -16,7 +18,7 @@ export default function ForgotPassword() {
     setError('')
 
     if (!email.trim()) {
-      setError('Please enter your registered email.')
+      setError(t('auth.registeredEmail'))
       return
     }
 
@@ -40,14 +42,14 @@ export default function ForgotPassword() {
       {!success ? (
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div className="hidden lg:block mb-2">
-            <h2 className="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">Forgot Password</h2>
-            <p className="text-slate-500 text-sm mt-1">Enter your registered email to receive a reset link.</p>
+            <h2 className="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">{t('auth.Forgot Password')}</h2>
+            <p className="text-slate-500 text-sm mt-1">{t('auth.registeredEmail')}</p>
           </div>
 
           <InputField
-            label="Email"
+            label={t('auth.email')}
             icon="email"
-            placeholder="Enter your registered email"
+            placeholder={t('auth.registeredEmail')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -65,12 +67,12 @@ export default function ForgotPassword() {
               className={`btn-primary h-14 text-base w-full flex items-center justify-center gap-2 transition-all duration-200 active:scale-95 shadow-glow ${loading ? 'opacity-70 pointer-events-none' : ''}`}
             >
               {loading ? <Icon name="autorenew" className="animate-spin" size="text-xl" /> : <Icon name="send" fill size="text-xl" />}
-              Send Reset Link
+              {t('auth.sendResetLink')}
             </button>
           </div>
 
           <div className="mt-4 text-sm text-slate-500 dark:text-slate-400 text-right">
-            <Link to="/login" className="font-semibold hover:text-primary transition-colors">← Back to Login</Link>
+            <Link to="/login" className="font-semibold hover:text-primary transition-colors">← {t('auth.backToLogin')}</Link>
           </div>
         </form>
       ) : (
@@ -81,16 +83,16 @@ export default function ForgotPassword() {
                 <Icon name="check_circle" size="text-3xl" />
               </div>
               <div>
-                <h2 className="text-lg font-bold">Reset link sent!</h2>
+                <h2 className="text-lg font-bold">{t('auth.sendResetLink')}!</h2>
                 <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">
-                  Reset link sent to <span className="font-semibold">{email.trim()}</span>. Check your inbox.
+                  {t('auth.resetSentTo', 'Reset link sent to')} <span className="font-semibold">{email.trim()}</span>.
                 </p>
               </div>
             </div>
           </div>
 
           <div className="mt-4 text-sm text-slate-500 dark:text-slate-400 text-right">
-            <Link to="/login" className="font-semibold hover:text-primary transition-colors">← Back to Login</Link>
+            <Link to="/login" className="font-semibold hover:text-primary transition-colors">← {t('auth.backToLogin')}</Link>
           </div>
         </div>
       )}

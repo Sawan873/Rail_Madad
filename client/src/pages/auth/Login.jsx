@@ -4,6 +4,7 @@ import { AuthLayout } from '../../components/layout'
 import { InputField } from '../../components/common'
 import { useAuth } from '../../context/AuthContext'
 import Icon from '../../components/common/Icon'
+import { useTranslation } from 'react-i18next'
 
 const GOV_NAVY = '#0f2747'
 const GOV_ORANGE = '#ff6b00'
@@ -26,6 +27,7 @@ const LOGIN_FEATURES = [
 ]
 
 export default function Login() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const { login } = useAuth()
@@ -108,12 +110,11 @@ export default function Login() {
                   color: GOV_NAVY,
                 }}
               >
-                Citizen Login
+                {t('auth.citizenLogin')}
               </p>
 
               <p className="text-[11px] text-slate-500 mt-1">
-                Secure access to grievance
-                services
+                {t('auth.secureAccess')}
               </p>
             </div>
           </div>
@@ -133,7 +134,7 @@ export default function Login() {
             />
 
             <span className="text-[11px] font-semibold text-slate-600">
-              Secure Portal
+              {t('auth.securePortal')}
             </span>
           </div>
         </div>
@@ -167,18 +168,16 @@ export default function Login() {
                   color: GOV_NAVY,
                 }}
               >
-                Ministry of Railways
+                {t('auth.ministry')}
               </span>
             </div>
 
             <h2 className="text-3xl font-black tracking-tight text-slate-900 dark:text-white">
-              Welcome Back
+              {t('auth.welcomeBack')}
             </h2>
 
             <p className="text-slate-500 text-sm mt-3 leading-relaxed">
-              Sign in to access your complaints,
-              grievance history, and railway
-              assistance services.
+              {t('auth.loginIntro')}
             </p>
           </div>
 
@@ -208,9 +207,9 @@ export default function Login() {
           {/* EMAIL */}
 
           <InputField
-            label="Email Address / Mobile Number"
+            label={t('auth.emailOrMobile')}
             icon="person"
-            placeholder="Enter your email or mobile number"
+            placeholder={t('auth.emailOrMobilePlaceholder')}
             value={formData.email}
             onChange={e =>
               setFormData({
@@ -227,14 +226,14 @@ export default function Login() {
           {/* PASSWORD */}
 
           <InputField
-            label="Password"
+            label={t('auth.password')}
             icon="lock"
             type={
               showPassword
                 ? 'text'
                 : 'password'
             }
-            placeholder="Enter your password"
+            placeholder={t('auth.passwordPlaceholder')}
             value={formData.password}
             onChange={e =>
               setFormData({
@@ -277,7 +276,7 @@ export default function Login() {
                 className="rounded border-slate-300"
               />
 
-              Remember me
+              {t('auth.rememberMe')}
             </label>
 
             <Link
@@ -287,7 +286,7 @@ export default function Login() {
                 color: GOV_NAVY,
               }}
             >
-              Forgot Password?
+              {t('auth.forgotPassword')}
             </Link>
           </div>
 
@@ -311,7 +310,7 @@ export default function Login() {
                     className="animate-spin"
                   />
 
-                  Signing In...
+                  {t('auth.signingIn')}
                 </>
               ) : (
                 <>
@@ -321,7 +320,7 @@ export default function Login() {
                     size="text-lg"
                   />
 
-                  Sign In
+                  {t('auth.signIn')}
                 </>
               )}
             </button>
@@ -333,7 +332,7 @@ export default function Login() {
               <div className="flex-grow border-t border-slate-200" />
 
               <span className="mx-4 text-[11px] uppercase tracking-[0.15em] text-slate-400 font-bold">
-                New Citizen
+                {t('auth.newCitizen')}
               </span>
 
               <div className="flex-grow border-t border-slate-200" />
@@ -361,7 +360,7 @@ export default function Login() {
                 size="text-lg"
               />
 
-              Create New Account
+              {t('auth.createNewAccount')}
             </button>
           </div>
 

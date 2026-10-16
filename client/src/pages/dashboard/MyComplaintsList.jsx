@@ -6,12 +6,14 @@ import { Timeline, ComplaintCard } from '../../components/feedback'
 import { COMPLAINT_TABS, COMPLAINT_FILTER_PILLS } from '../../constants/mockData'
 import TopUtilityBar from '../../components/common/TopUtilityBar'
 import api from '../../services/api'
+import { useTranslation } from 'react-i18next'
 
 const GOV_NAVY = '#1a3a6b'
 const GOV_ORANGE = '#ff6b00'
 
 export default function MyComplaintsList() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState(0)
   const [activeFilter, setActiveFilter] = useState(0)
   const [complaints, setComplaints] = useState([])
@@ -84,7 +86,7 @@ export default function MyComplaintsList() {
               Government of India — Ministry of Railways
             </p>
             <h1 className="text-lg md:text-xl font-bold text-[#1a3a6b] tracking-tight mt-0.5">
-              Rail Madad Grievance Portal
+              {t('complaint.portal')}
             </h1>
           </div>
           <div className="flex items-center gap-3">
@@ -100,12 +102,12 @@ export default function MyComplaintsList() {
         {/* Nav Bar */}
         <nav className="hidden md:flex items-center overflow-x-auto bg-[#1a3a6b]">
           {[
-            { label: 'Home', icon: 'home', path: '/' },
-            { label: 'File Complaint', icon: 'add_circle', path: '/file-complaint' },
-            { label: 'Track Complaint', icon: 'track_changes', active: true },
-            { label: 'PNR Enquiry', icon: 'confirmation_number' },
-            { label: 'About', icon: 'info' },
-            { label: 'Contact Us', icon: 'call' },
+            { label: t('common.home'), icon: 'home', path: '/' },
+            { label: t('common.fileComplaint'), icon: 'add_circle', path: '/file-complaint' },
+            { label: t('common.trackComplaint'), icon: 'track_changes', active: true },
+            { label: t('common.pnrEnquiry'), icon: 'confirmation_number' },
+            { label: t('common.about'), icon: 'info' },
+            { label: t('common.contact'), icon: 'call' },
           ].map(({ label, icon, active, path }) => (
             <button
               key={label}
@@ -132,7 +134,7 @@ export default function MyComplaintsList() {
                   : 'border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-50/50'
               }`}
             >
-              {tab}
+              {t(`complaintList.${tab.toLowerCase()}`, tab)}
             </button>
           ))}
         </div>
@@ -141,16 +143,16 @@ export default function MyComplaintsList() {
         <div className="px-6 py-2.5 text-xs flex items-center gap-2 bg-slate-50 border-b border-slate-200">
           <span className="font-semibold text-[#1a3a6b] cursor-pointer hover:underline" onClick={() => navigate('/')}>Home</span>
           <span className="text-slate-400">›</span>
-          <span className="text-slate-600">My Complaints</span>
+          <span className="text-slate-600">{t('complaintList.title')}</span>
           <span className="text-slate-400">›</span>
-          <span className="font-medium text-slate-800">{COMPLAINT_TABS[activeTab]}</span>
+            <span className="font-medium text-slate-800">{t(`complaintList.${COMPLAINT_TABS[activeTab].toLowerCase()}`, COMPLAINT_TABS[activeTab])}</span>
         </div>
       </header>
 
       <main className="max-w-5xl mx-auto pb-28 lg:pb-12 pt-6 px-4">
         {/* Filter Pills */}
         <div className="flex flex-wrap items-center gap-2 mb-6">
-          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider mr-2">Filter By:</span>
+          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider mr-2">{t('complaintList.filter')}</span>
           {COMPLAINT_FILTER_PILLS.map((pill, i) => (
             <button
               key={pill}
@@ -161,7 +163,7 @@ export default function MyComplaintsList() {
                   : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
               }`}
             >
-              {pill}
+              {t(`complaintList.${pill === 'All Recent' ? 'allRecent' : pill.toLowerCase()}`, pill)}
             </button>
           ))}
         </div>
@@ -169,21 +171,21 @@ export default function MyComplaintsList() {
         {loading ? (
           <div className="py-16 flex flex-col items-center justify-center">
             <div className="size-8 border-4 border-slate-200 border-t-[#1a3a6b] rounded-full animate-spin mb-4" />
-            <p className="text-slate-500 font-medium text-sm">Retrieving grievance records...</p>
+            <p className="text-slate-500 font-medium text-sm">{t('complaintList.loading')}</p>
           </div>
         ) : filteredComplaints.length === 0 ? (
           <div className="py-16 px-6 text-center bg-white rounded-2xl border border-slate-200 shadow-sm">
             <div className="size-16 rounded-2xl bg-blue-50 flex items-center justify-center mx-auto mb-4">
               <Icon name="assignment" size="text-3xl" className="text-[#1a3a6b]" />
             </div>
-            <h3 className="text-lg font-bold text-slate-800 mb-1">No Grievances Found</h3>
-            <p className="text-slate-500 text-sm mb-6 max-w-md mx-auto">We couldn't find any complaint records matching your current filter criteria.</p>
+            <h3 className="text-lg font-bold text-slate-800 mb-1">{t('complaintList.empty')}</h3>
+            <p className="text-slate-500 text-sm mb-6 max-w-md mx-auto">{t('complaintList.emptyDesc')}</p>
             <button
               onClick={() => navigate('/file-complaint')}
               className="px-6 py-2.5 rounded-xl bg-[#1a3a6b] text-white text-sm font-semibold hover:bg-[#15305b] transition-colors shadow-sm inline-flex items-center gap-2"
             >
               <Icon name="add_circle" size="text-lg" />
-              File New Complaint
+              {t('complaintList.fileNew')}
             </button>
           </div>
         ) : (
@@ -247,8 +249,8 @@ export default function MyComplaintsList() {
                               <Icon name="support_agent" fill size="text-xl" className="text-[#1a3a6b]" />
                             </div>
                             <div>
-                              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-0.5">Assigned To</p>
-                              <p className="text-sm font-bold text-slate-800">{complaint.department?.name || 'Pending Assignment'}</p>
+                              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-0.5">{t('complaintList.assignedTo')}</p>
+                              <p className="text-sm font-bold text-slate-800">{complaint.department?.name || t('complaintList.pending')}</p>
                             </div>
                           </div>
                           
@@ -257,7 +259,7 @@ export default function MyComplaintsList() {
                               <Icon name="priority_high" size="text-xl" className={urg.color} />
                             </div>
                             <div>
-                              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-0.5">Priority Level</p>
+                              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-0.5">{t('complaintList.priority')}</p>
                               <p className={`text-sm font-bold ${urg.color}`}>{urg.label}</p>
                             </div>
                           </div>
@@ -268,7 +270,7 @@ export default function MyComplaintsList() {
                           <div className="rounded-xl overflow-hidden border border-slate-200 bg-white shadow-sm">
                             <div className="px-4 py-2.5 bg-slate-100 border-b border-slate-200 flex items-center gap-2">
                               <Icon name="attachment" size="text-sm" className="text-slate-500" />
-                              <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">Attached Evidence</span>
+                              <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">{t('complaintList.evidence')}</span>
                             </div>
                             <img src={complaint.mediaFiles[0].url} alt="Complaint attachment" className="w-full h-48 md:h-64 object-cover" />
                           </div>
@@ -279,7 +281,7 @@ export default function MyComplaintsList() {
                           <div className="rounded-xl overflow-hidden border border-slate-200 bg-white shadow-sm">
                             <div className="px-4 py-2.5 bg-[#1a3a6b] flex items-center gap-2">
                               <Icon name="history" size="text-sm" className="text-blue-200" />
-                              <span className="text-xs font-bold text-white uppercase tracking-wide">Resolution Timeline</span>
+                              <span className="text-xs font-bold text-white uppercase tracking-wide">{t('complaintList.timeline')}</span>
                             </div>
                             <div className="p-5">
                               <Timeline
@@ -302,14 +304,14 @@ export default function MyComplaintsList() {
                             className="flex-1 px-4 py-3 rounded-xl bg-[#1a3a6b] text-white text-sm font-semibold hover:bg-[#15305b] transition-colors shadow-sm flex items-center justify-center gap-2"
                           >
                             <Icon name="rate_review" size="text-lg" />
-                            Provide Feedback
+                            {t('complaintList.feedback')}
                           </button>
                           <button
                             onClick={() => navigate('/chat')}
                             className="flex-1 px-4 py-3 rounded-xl bg-white border border-[#1a3a6b] text-[#1a3a6b] text-sm font-semibold hover:bg-blue-50 transition-colors shadow-sm flex items-center justify-center gap-2"
                           >
                             <Icon name="support_agent" size="text-lg" />
-                            Contact Support
+                            {t('complaintList.support')}
                           </button>
                         </div>
                       </div>

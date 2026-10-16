@@ -4,8 +4,10 @@ import { GradientPanel } from '../../components/layout'
 import { Icon, InfoBanner } from '../../components/common'
 import TopUtilityBar from '../../components/common/TopUtilityBar'
 import { SENTIMENTS } from '../../constants/mockData'
+import { useTranslation } from 'react-i18next'
 
 export default function FeedbackRating() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [selected, setSelected] = useState(-1)
   const [comment, setComment] = useState('')
@@ -19,8 +21,8 @@ export default function FeedbackRating() {
             <div className="inline-flex items-center justify-center size-16 rounded-3xl bg-white/20 border border-white/30 mb-4">
               <Icon name="rate_review" fill className="text-white" size="text-4xl" />
             </div>
-            <h1 className="text-white text-2xl font-extrabold tracking-tight">Share Your Feedback</h1>
-            <p className="text-white/70 text-sm mt-1">Help us serve you better</p>
+            <h1 className="text-white text-2xl font-extrabold tracking-tight">{t('feedback.title')}</h1>
+            <p className="text-white/70 text-sm mt-1">{t('feedback.subtitle')}</p>
           </div>
         </GradientPanel>
 
@@ -30,7 +32,7 @@ export default function FeedbackRating() {
             {/* Sentiment picker */}
             <div className="mb-8">
               <p className="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-5 text-center">
-                How was your experience?
+                {t('feedback.prompt')}
               </p>
               <div className="flex justify-between items-center">
                 {SENTIMENTS.map(({ icon, label, activeColor, activeBg }, i) => {
@@ -50,7 +52,7 @@ export default function FeedbackRating() {
                         />
                       </div>
                       <span className={`text-[11px] font-bold transition-colors ${isActive ? activeColor : 'text-slate-400'}`}>
-                        {label}
+                        {t(`feedback.${label.toLowerCase()}`, label)}
                       </span>
                     </button>
                   )
@@ -60,27 +62,27 @@ export default function FeedbackRating() {
 
             {/* Comment */}
             <div className="mb-6">
-              <p className="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">Additional comments</p>
+              <p className="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-3">{t('feedback.comments')}</p>
               <textarea
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 rows={4}
-                placeholder="Tell us what we can improve or what you liked…"
+                placeholder={t('feedback.placeholder')}
                 className="input-field w-full !h-auto resize-none pt-4 text-sm"
               />
             </div>
 
             {/* Tip */}
             <InfoBanner className="mb-8" icon="info">
-              Your feedback is anonymous and helps us provide better service to all passengers.
+              {t('feedback.anonymous')}
             </InfoBanner>
 
             {/* Submit */}
             <button onClick={() => navigate('/home')} className="btn-primary w-full flex items-center justify-center gap-2">
               <Icon name="send" fill />
-              Submit Feedback
+              {t('feedback.submit')}
             </button>
-            <p className="text-center text-[11px] text-slate-400 mt-4">Powered by Ministry of Railways</p>
+            <p className="text-center text-[11px] text-slate-400 mt-4">{t('feedback.powered')}</p>
           </div>
         </div>
       </div>

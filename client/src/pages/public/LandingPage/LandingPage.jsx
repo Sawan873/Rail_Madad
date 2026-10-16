@@ -11,6 +11,7 @@ import Footer from './Footer'
 import { useAuth } from '../../../context/AuthContext'
 
 import TopUtilityBar from '../../../components/common/TopUtilityBar'
+import { useTranslation } from 'react-i18next'
 
 const GOV_NAVY = '#0f2747'
 const GOV_ORANGE = '#ff6b00'
@@ -33,6 +34,7 @@ const navLinks = [
 ]
 
 export default function LandingPage() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const { user } = useAuth()
@@ -70,7 +72,7 @@ export default function LandingPage() {
       {/* HEADER */}
 
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
+        className={`sticky top-0 z-40 transition-all duration-300 ${
           isScrolled
             ? 'backdrop-blur-2xl shadow-lg'
             : ''
@@ -129,9 +131,6 @@ export default function LandingPage() {
                   Rail Madad
                 </h1>
 
-                <p className="hidden sm:block text-[10px] uppercase tracking-[0.18em] text-slate-500 font-bold mt-1">
-                  Ministry of Railways
-                </p>
               </div>
 
               {/* DIVIDER */}
@@ -156,7 +155,7 @@ export default function LandingPage() {
                   href={link.href}
                   className="group relative text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors"
                 >
-                  {link.name}
+                  {t(`common.${link.name.toLowerCase()}`, link.name)}
 
                   <span
                     className="absolute -bottom-2 left-0 w-0 h-[2px] rounded-full transition-all duration-300 group-hover:w-full"
@@ -293,7 +292,7 @@ export default function LandingPage() {
                   }
                   className="flex items-center justify-between rounded-2xl px-5 py-4 font-semibold text-slate-700 transition-all duration-300 hover:bg-slate-50"
                 >
-                  <span>{link.name}</span>
+                  <span>{t(`common.${link.name.toLowerCase()}`, link.name)}</span>
 
                   <Icon
                     name="arrow_forward_ios"
@@ -374,9 +373,6 @@ export default function LandingPage() {
                   Government of India
                 </p>
 
-                <p className="text-[9px] uppercase tracking-[0.12em] text-slate-400 mt-1">
-                  Ministry of Railways
-                </p>
               </div>
             </div>
           </div>

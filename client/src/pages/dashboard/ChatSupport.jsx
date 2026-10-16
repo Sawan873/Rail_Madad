@@ -4,9 +4,11 @@ import { GradientPanel } from '../../components/layout'
 import Icon from '../../components/common/Icon'
 import TopUtilityBar from '../../components/common/TopUtilityBar'
 import { INITIAL_CHAT_MESSAGES } from '../../constants/mockData'
+import { useTranslation } from 'react-i18next'
 
 export default function ChatSupport() {
   const navigate = useNavigate()
+  const { t, i18n } = useTranslation()
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState(INITIAL_CHAT_MESSAGES)
   const bottomRef = useRef(null)
@@ -15,11 +17,19 @@ export default function ChatSupport() {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
+  useEffect(() => {
+    setMessages((current) => current.map((message) => (
+      message.id === 1 && message.from === 'bot'
+        ? { ...message, text: t('chat.welcome') }
+        : message
+    )))
+  }, [i18n.resolvedLanguage, t])
+
   const sendMessage = () => {
     if (!input.trim()) return
     setMessages((prev) => [
       ...prev,
-      { id: prev.length + 1, from: 'user', text: input.trim(), time: 'Now' },
+      { id: prev.length + 1, from: 'user', text: input.trim(), time: t('chat.now') },
     ])
     setInput('')
   }
@@ -40,7 +50,7 @@ export default function ChatSupport() {
             >
               <Icon name="arrow_back" size="text-xl" />
             </button>
-            <h2 className="text-white font-black flex-1 text-center text-base">Chat Support</h2>
+            <h2 className="text-white font-black flex-1 text-center text-base">{t('chat.supportTitle')}</h2>
             <div className="size-10" />
           </div>
 
@@ -50,10 +60,10 @@ export default function ChatSupport() {
               <span className="absolute -bottom-0.5 -right-0.5 size-3 bg-green-400 rounded-full border-2 border-white" />
             </div>
             <div className="flex-1">
-              <p className="text-white font-bold text-base leading-tight">Rail Madad Assistant</p>
+              <p className="text-white font-bold text-base leading-tight">{t('chat.assistant')}</p>
               <div className="flex items-center gap-1.5 mt-0.5">
                 <span className="size-1.5 bg-green-400 rounded-full" />
-                <span className="text-white/70 text-xs font-medium">Online · Typically replies instantly</span>
+                <span className="text-white/70 text-xs font-medium">{t('chat.online')}</span>
               </div>
             </div>
             <button className="flex size-10 items-center justify-center rounded-2xl bg-white/15 border border-white/20 text-white hover:bg-white/25 transition-colors">
@@ -68,7 +78,7 @@ export default function ChatSupport() {
         <div className="max-w-4xl mx-auto px-4 py-4 space-y-5">
           <div className="flex justify-center">
             <span className="px-3 py-1 bg-slate-200/80 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[11px] font-bold rounded-full uppercase tracking-wider">
-              Today
+              {t('chat.today')}
             </span>
           </div>
 
@@ -116,7 +126,7 @@ export default function ChatSupport() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
               className="flex-1 bg-transparent border-none focus:ring-0 text-slate-900 dark:text-slate-100 text-sm py-1.5 outline-none placeholder:text-slate-400"
-              placeholder="Type your message..."
+              placeholder={t('chat.placeholder')}
             />
             <button
               onClick={sendMessage}
@@ -127,8 +137,8 @@ export default function ChatSupport() {
             </button>
           </div>
           <div className="mt-2.5 mb-1 flex justify-center gap-6">
-            <button className="text-[10px] font-bold text-primary uppercase tracking-widest hover:underline">View Ticket</button>
-            <button className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:underline">End Chat</button>
+            <button className="text-[10px] font-bold text-primary uppercase tracking-widest hover:underline">{t('chat.viewTicket')}</button>
+            <button className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:underline">{t('chat.endChat')}</button>
           </div>
         </div>
       </div>

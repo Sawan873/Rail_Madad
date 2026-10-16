@@ -1,9 +1,11 @@
 import Icon from '../../../components/common/Icon'
+import { useTranslation } from 'react-i18next'
 
 const GOV_NAVY = '#0f2747'
 const GOV_ORANGE = '#ff6b00'
 
 export default function ContactSection() {
+  const { t } = useTranslation()
   return (
     <section
       id="contact"
@@ -66,13 +68,11 @@ export default function ContactSection() {
               color: '#0f172a',
             }}
           >
-            Need Assistance?
+            {t('landing.needAssistance')}
           </h2>
 
           <p className="text-slate-500 text-lg max-w-2xl mx-auto mt-5 leading-relaxed">
-            Rail Madad support services are available to help
-            passengers with grievance filing, complaint
-            tracking, technical issues, and railway assistance.
+            {t('landing.contactBody')}
           </p>
         </div>
 
@@ -118,7 +118,7 @@ export default function ContactSection() {
                       color: GOV_NAVY,
                     }}
                   >
-                    Railway Support
+                    {t('landing.railwaySupport')}
                   </h3>
 
                   <p className="text-slate-500 mt-3 leading-relaxed">
@@ -136,20 +136,20 @@ export default function ContactSection() {
                 {[
                   {
                     icon: 'call',
-                    title: 'Railway Helpline',
+                    title: t('landing.helpline'),
                     value: '139 (Toll Free)',
                   },
 
                   {
                     icon: 'mail',
-                    title: 'Official Email',
+                    title: t('landing.officialEmail'),
                     value:
                       'support@railmadad.gov.in',
                   },
 
                   {
                     icon: 'schedule',
-                    title: 'Support Hours',
+                    title: t('landing.supportHours'),
                     value: '24×7 Citizen Support',
                   },
                 ].map(item => (
@@ -190,77 +190,6 @@ export default function ContactSection() {
               </div>
             </div>
 
-            {/* QUICK SERVICES */}
-
-            <div
-              className="rounded-[2rem] p-8 shadow-sm"
-              style={{
-                background: GOV_NAVY,
-              }}
-            >
-              <div className="flex items-center gap-4 mb-6">
-                
-                <div
-                  className="size-14 rounded-2xl flex items-center justify-center"
-                  style={{
-                    background:
-                      'rgba(255,255,255,0.1)',
-                  }}
-                >
-                  <Icon
-                    name="railway_alert"
-                    fill
-                    size="text-2xl"
-                    className="text-white"
-                  />
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-black text-white">
-                    Quick Assistance
-                  </h3>
-
-                  <p className="text-sm text-blue-200 mt-1">
-                    Common railway citizen services
-                  </p>
-                </div>
-              </div>
-
-              <div className="grid sm:grid-cols-2 gap-4">
-                
-                {[
-                  'Complaint Filing',
-                  'Track Complaint',
-                  'PNR Guidance',
-                  'Railway Support',
-                ].map(service => (
-                  <div
-                    key={service}
-                    className="flex items-center gap-3 rounded-2xl p-4"
-                    style={{
-                      background:
-                        'rgba(255,255,255,0.06)',
-
-                      border:
-                        '1px solid rgba(255,255,255,0.08)',
-                    }}
-                  >
-                    <Icon
-                      name="check_circle"
-                      fill
-                      size="text-lg"
-                      style={{
-                        color: '#4ade80',
-                      }}
-                    />
-
-                    <span className="text-sm text-slate-100 font-medium">
-                      {service}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
           {/* RIGHT SIDE FORM */}
@@ -314,7 +243,7 @@ export default function ContactSection() {
                       color: GOV_NAVY,
                     }}
                   >
-                    Contact Form
+                    {t('landing.contactForm')}
                   </span>
                 </div>
 
@@ -324,12 +253,11 @@ export default function ContactSection() {
                     color: '#0f172a',
                   }}
                 >
-                  Send a Message
+                  {t('landing.query')}
                 </h3>
 
                 <p className="text-slate-500 mt-3 leading-relaxed">
-                  Submit your queries or technical concerns to
-                  the Rail Madad support team.
+                  {t('landing.queryBody')}
                 </p>
               </div>
 
@@ -341,7 +269,7 @@ export default function ContactSection() {
 
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">
-                    Full Name
+                    {t('landing.fullName')}
                   </label>
 
                   <div className="relative">
@@ -353,7 +281,7 @@ export default function ContactSection() {
 
                     <input
                       type="text"
-                      placeholder="Enter your name"
+                      placeholder={t('landing.enterName')}
                       autoComplete="name"
                       className="w-full h-14 rounded-2xl border border-slate-200 bg-white pl-12 pr-4 outline-none focus:ring-2 transition-all"
                       style={{
@@ -368,7 +296,7 @@ export default function ContactSection() {
 
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">
-                    Email Address
+                    {t('landing.emailAddress')}
                   </label>
 
                   <div className="relative">
@@ -380,7 +308,7 @@ export default function ContactSection() {
 
                     <input
                       type="email"
-                      placeholder="Enter your email"
+                      placeholder={t('landing.enterEmail')}
                       autoComplete="email"
                       className="w-full h-14 rounded-2xl border border-slate-200 bg-white pl-12 pr-4 outline-none focus:ring-2 transition-all"
                     />
@@ -391,7 +319,7 @@ export default function ContactSection() {
 
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">
-                    Message
+                    {t('landing.message')}
                   </label>
 
                   <div className="relative">
@@ -403,7 +331,7 @@ export default function ContactSection() {
 
                     <textarea
                       rows="5"
-                      placeholder="Describe your issue or query..."
+                      placeholder={t('landing.describeIssue')}
                       className="w-full rounded-2xl border border-slate-200 bg-white pl-12 pr-4 py-4 outline-none resize-none focus:ring-2 transition-all"
                     />
                   </div>
@@ -417,7 +345,7 @@ export default function ContactSection() {
                     background: GOV_NAVY,
                   }}
                 >
-                  <span>Submit Inquiry</span>
+                  <span>{t('landing.submitInquiry')}</span>
 
                   <Icon
                     name="send"
@@ -428,9 +356,7 @@ export default function ContactSection() {
                 {/* FOOT NOTE */}
 
                 <p className="text-xs text-center text-slate-400 leading-relaxed">
-                  By submitting this form, you agree to the
-                  Rail Madad support and grievance handling
-                  policies.
+                  {t('landing.submitPolicies')}
                 </p>
               </div>
             </div>

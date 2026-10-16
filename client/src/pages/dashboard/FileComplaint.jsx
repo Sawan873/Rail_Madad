@@ -4,11 +4,12 @@ import { Icon } from '../../components/common'
 import TopUtilityBar from '../../components/common/TopUtilityBar'
 import { COMPLAINT_METHODS } from '../../constants/mockData'
 import { api } from '../../services/api'
+import { useTranslation } from 'react-i18next'
 
 export default function FileComplaint() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const fileInputRef = useRef(null)
-   console.log("check token ",localStorage.getItem('rm_token'))
   const [step, setStep] = useState(1)
   const [chosen, setChosen] = useState(null)
   const [selectedFile, setSelectedFile] = useState(null)
@@ -44,7 +45,7 @@ export default function FileComplaint() {
 
   async function handleSubmit() {
     if (!pnr.trim()) {
-      setError('PNR number is required to proceed.')
+      setError(t('complaint.requiredPnr'))
       return
     }
 
@@ -56,16 +57,15 @@ export default function FileComplaint() {
       formData.append('pnrNumber', pnr)
       formData.append('rawText', desc || (selectedFile ? `Filing with ${selectedFile.type}` : ''))
       if (selectedFile) formData.append('files', selectedFile)
-        console.log("this is formdata",formData)
 
       const response = await api.upload('/complaints/submit', formData)
 
       if (response.success) {
-        navigate('/complaints', { state: { message: 'Complaint filed successfully!' } })
+        navigate('/complaints', { state: { message: t('complaint.fileSuccess') } })
       }
     } catch (err) {
       console.error('Upload failed:', err)
-      setError(err.message || 'Failed to submit complaint. Please try again.')
+      setError(err.message || t('complaint.submitError'))
     } finally {
       setLoading(false)
     }
@@ -94,24 +94,24 @@ export default function FileComplaint() {
               Government of India — Ministry of Railways
             </p>
             <h1 className="text-lg md:text-xl font-bold text-[#1a3a6b] tracking-tight mt-0.5">
-              Rail Madad Grievance Portal
+              {t('complaint.portal')}
             </h1>
           </div>
 
           <span className="hidden md:block text-[10px] font-bold text-white px-3 py-1.5 rounded-full bg-[#ff6b00] shadow-sm uppercase tracking-wide">
-            Official Portal
+            {t('complaint.official')}
           </span>
         </div>
 
         {/* Nav Bar */}
         <nav className="hidden md:flex items-center overflow-x-auto bg-[#1a3a6b]">
           {[
-            { label: 'Home', icon: 'home', path: '/' },
-            { label: 'File Complaint', icon: 'add_circle', active: true },
-            { label: 'Track Complaint', icon: 'track_changes', path: '/complaints' },
-            { label: 'PNR Enquiry', icon: 'confirmation_number' },
-            { label: 'About', icon: 'info' },
-            { label: 'Contact Us', icon: 'call' },
+            { label: t('common.home'), icon: 'home', path: '/' },
+            { label: t('common.fileComplaint'), icon: 'add_circle', active: true },
+            { label: t('common.trackComplaint'), icon: 'track_changes', path: '/complaints' },
+            { label: t('common.pnrEnquiry'), icon: 'confirmation_number' },
+            { label: t('common.about'), icon: 'info' },
+            { label: t('common.contact'), icon: 'call' },
           ].map(({ label, icon, active, path }) => (
             <button
               key={label}
@@ -132,12 +132,12 @@ export default function FileComplaint() {
             className="font-semibold text-[#1a3a6b] cursor-pointer hover:underline"
             onClick={() => navigate('/')}
           >
-            Home
+            {t('common.home')}
           </span>
           <span className="text-slate-400">›</span>
-          <span className="text-slate-600">File Complaint</span>
+          <span className="text-slate-600">{t('common.fileComplaint')}</span>
           <span className="text-slate-400">›</span>
-          <span className="font-medium text-slate-800">Step {currentStep} of 2</span>
+          <span className="font-medium text-slate-800">{t('complaint.step', { current: currentStep })}</span>
         </div>
       </header>
     </>
@@ -157,14 +157,14 @@ export default function FileComplaint() {
               <Icon name="add_a_photo" className="text-white" size="text-2xl" fill />
             </div>
             <div className="flex-1">
-              <h2 className="text-xl font-bold text-[#1a3a6b]">File a New Complaint</h2>
+              <h2 className="text-xl font-bold text-[#1a3a6b]">{t('complaint.fileTitle')}</h2>
               <p className="text-sm font-medium text-slate-500 mt-0.5">
-                Step 1 of 2 — Select the mode of grievance submission
+                {t('complaint.stepOne')}
               </p>
             </div>
             <div className="hidden sm:flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg bg-blue-50 text-[#1a3a6b] border border-blue-100">
               <Icon name="lock" size="text-sm" />
-              SECURE FORM
+              {t('complaint.secureForm')}
             </div>
           </div>
 
@@ -174,7 +174,7 @@ export default function FileComplaint() {
               <Icon name="info" size="text-lg" className="text-amber-600" />
             </div>
             <p className="text-sm text-amber-800 font-medium leading-snug pt-1.5">
-              Sharing media (photo/audio) helps resolve issues faster. Your location will be automatically tagged to assist the Railway staff.
+              {t('complaint.mediaNotice')}
             </p>
           </div>
 
@@ -182,7 +182,7 @@ export default function FileComplaint() {
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden mb-6">
             <div className="px-5 py-3.5 bg-[#1a3a6b] border-b border-slate-200 flex items-center gap-2.5">
               <span className="size-2.5 rounded-full bg-[#ff6b00]" />
-              <h3 className="text-white text-sm font-bold uppercase tracking-wide">Select Submission Mode</h3>
+              <h3 className="text-white text-sm font-bold uppercase tracking-wide">{t('complaint.selectMode')}</h3>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-100">
@@ -196,11 +196,11 @@ export default function FileComplaint() {
                     <Icon name={method.icon} fill size="text-[32px]" className="text-[#1a3a6b]" />
                   </div>
                   <div>
-                    <p className="text-base font-bold text-[#1a3a6b] mb-1">{method.label}</p>
-                    <p className="text-xs font-medium text-slate-500 leading-snug">{method.desc}</p>
+                    <p className="text-base font-bold text-[#1a3a6b] mb-1">{t(`complaint.methods.${method.label}`, method.label)}</p>
+                    <p className="text-xs font-medium text-slate-500 leading-snug">{t(`complaint.methods.${method.desc}`, method.desc)}</p>
                   </div>
                   <div className="mt-2 text-[10px] font-bold px-3 py-1.5 rounded-lg uppercase tracking-wide bg-slate-100 text-[#1a3a6b] border border-slate-200 group-hover:bg-[#1a3a6b] group-hover:text-white group-hover:border-[#1a3a6b] transition-colors">
-                    Select Mode →
+                    {t('complaint.select')}
                   </div>
                 </button>
               ))}
@@ -209,7 +209,7 @@ export default function FileComplaint() {
 
           {/* Help Note */}
           <div className="text-center text-xs font-medium text-slate-500 mt-8">
-            Need help? Call Railway Helpline <strong className="text-[#1a3a6b]">139</strong> (24×7 available)
+            {t('complaint.needHelp')}
           </div>
         </main>
       </div>
@@ -228,9 +228,9 @@ export default function FileComplaint() {
             <Icon name="edit_document" className="text-white" size="text-2xl" fill />
           </div>
           <div className="flex-1">
-            <h2 className="text-xl font-bold text-[#1a3a6b]">Grievance Details</h2>
+              <h2 className="text-xl font-bold text-[#1a3a6b]">{t('complaint.details')}</h2>
             <p className="text-sm font-medium text-slate-500 mt-0.5">
-              Step 2 of 2 — Enter PNR and describe the issue
+              {t('complaint.stepTwo')}
             </p>
           </div>
         </div>
@@ -250,8 +250,8 @@ export default function FileComplaint() {
               <Icon name={chosen.icon} fill size="text-2xl" className="text-green-700" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-bold text-green-800">{chosen.label} attached successfully</p>
-              <p className="text-xs font-medium text-green-600 truncate mt-0.5">{fileName || 'Ready to submit'}</p>
+              <p className="text-sm font-bold text-green-800">{t('complaint.attached', { label: t(`complaint.methods.${chosen.label}`, chosen.label) })}</p>
+              <p className="text-xs font-medium text-green-600 truncate mt-0.5">{fileName || t('complaint.ready')}</p>
             </div>
             <div className="flex items-center gap-3">
               <Icon name="check_circle" fill className="text-green-600" size="text-xl" />
@@ -269,14 +269,14 @@ export default function FileComplaint() {
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden mb-6">
           <div className="px-5 py-3.5 bg-[#1a3a6b] border-b border-slate-200 flex items-center gap-2.5">
             <span className="size-2.5 rounded-full bg-[#ff6b00]" />
-            <h3 className="text-white text-sm font-bold uppercase tracking-wide">Grievance Information</h3>
+            <h3 className="text-white text-sm font-bold uppercase tracking-wide">{t('complaint.information')}</h3>
           </div>
 
           <div className="p-6 flex flex-col gap-6">
             {/* PNR Field */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
-                PNR Number <span className="text-red-500">*</span>
+                {t('complaint.pnrNumber')} <span className="text-red-500">*</span>
                 <span className="ml-2 font-medium normal-case tracking-normal text-slate-400">(10-digit passenger name record)</span>
               </label>
               <div className="relative">
@@ -289,7 +289,7 @@ export default function FileComplaint() {
                   maxLength={10}
                   value={pnr}
                   onChange={(e) => setPnr(e.target.value.replace(/\D/g, ''))}
-                  placeholder="e.g. 4521876543"
+                  placeholder={t('complaint.pnrPlaceholder')}
                   className={`w-full h-14 pl-12 pr-12 text-base font-bold tracking-[0.2em] rounded-xl border-2 outline-none transition-colors ${
                     pnr.length === 10 ? 'border-green-500 bg-green-50/30 text-green-900 focus:border-green-600' : 'border-slate-200 bg-slate-50 text-slate-800 focus:border-[#1a3a6b] focus:bg-white'
                   }`}
@@ -302,7 +302,7 @@ export default function FileComplaint() {
               </div>
               <div className="flex justify-between items-center mt-2 px-1">
                 <p className="text-xs font-medium text-slate-500">
-                  Must be exactly 10 digits
+                  {t('complaint.exactDigits')}
                 </p>
                 <p className={`text-xs font-bold ${pnr.length === 10 ? 'text-green-600' : 'text-slate-400'}`}>
                   {pnr.length}/10
@@ -313,18 +313,18 @@ export default function FileComplaint() {
             {/* Description */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
-                Grievance Description
-                <span className="ml-2 font-medium normal-case tracking-normal text-slate-400">(Optional but recommended)</span>
+                {t('complaint.description')}
+                <span className="ml-2 font-medium normal-case tracking-normal text-slate-400">{t('complaint.optional')}</span>
               </label>
               <textarea
                 rows={5}
                 value={desc}
                 onChange={(e) => setDesc(e.target.value)}
-                placeholder="Describe the issue in detail — e.g. coach number, seat, nature of complaint, time of occurrence…"
+                placeholder={t('complaint.descriptionPlaceholder')}
                 className="w-full p-4 text-sm font-medium rounded-xl border-2 border-slate-200 bg-slate-50 text-slate-800 outline-none resize-none transition-colors focus:border-[#1a3a6b] focus:bg-white leading-relaxed"
               />
               <p className="text-xs font-medium text-slate-500 mt-2 px-1">
-                {desc.length} characters · Detailed descriptions help resolve issues faster
+                {t('complaint.chars', { count: desc.length })}
               </p>
             </div>
           </div>
@@ -334,8 +334,7 @@ export default function FileComplaint() {
         <div className="flex items-start gap-3 px-5 py-4 rounded-xl bg-blue-50/50 border border-blue-100 text-slate-600">
           <Icon name="verified_user" size="text-xl" className="text-[#1a3a6b]" />
           <p className="text-xs font-medium leading-relaxed">
-            I hereby declare that the information provided is true and correct to the best of my knowledge.
-            False grievances may result in account suspension as per <strong className="text-[#1a3a6b]">Railway Act provisions</strong>.
+            {t('complaint.declaration')}
           </p>
         </div>
       </main>
@@ -348,7 +347,7 @@ export default function FileComplaint() {
             className="w-full sm:w-auto h-12 px-6 rounded-xl text-sm font-bold border-2 border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-colors flex items-center justify-center gap-2"
           >
             <Icon name="arrow_back" size="text-lg" />
-            Back
+            {t('complaint.back')}
           </button>
           
           <button
@@ -359,12 +358,12 @@ export default function FileComplaint() {
             {loading ? (
               <>
                 <span className="size-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                Submitting Grievance...
+                {t('complaint.submitting')}
               </>
             ) : (
               <>
                 <Icon name="send" fill size="text-lg" />
-                Submit Grievance
+                {t('complaint.submit')}
               </>
             )}
           </button>

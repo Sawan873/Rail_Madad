@@ -5,7 +5,7 @@ export default function TopUtilityBar() {
   const { t } = useTranslation()
 
   return (
-    <div className="px-4 py-2 flex items-center justify-between bg-[#1a3a6b] border-b-2 border-[#ff6b00]">
+    <div className="relative z-[60] px-4 py-2 flex items-center justify-between bg-[#1a3a6b] border-b-2 border-[#ff6b00]">
       <div className="flex items-center gap-3 text-[11px] font-medium text-blue-100">
         <span className="hidden sm:block cursor-pointer hover:text-white transition-colors">{t('common.skipMain', 'Skip to Main Content')}</span>
         <span className="hidden sm:block text-blue-400">|</span>

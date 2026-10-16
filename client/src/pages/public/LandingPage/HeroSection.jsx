@@ -1,11 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import Icon from '../../../components/common/Icon'
+import { useTranslation } from 'react-i18next'
 
 const GOV_NAVY = '#1a3a6b'
 const GOV_ORANGE = '#ff6b00'
 
 export default function HeroSection() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   return (
     <section
@@ -67,7 +69,7 @@ export default function HeroSection() {
                   color: GOV_NAVY,
                 }}
               >
-                Official Railway Grievance Portal
+                {t('landing.badge')}
               </span>
             </div>
 
@@ -114,7 +116,7 @@ export default function HeroSection() {
                   size="text-lg"
                 />
 
-                File Complaint
+                {t('common.fileComplaint')}
 
                 <Icon
                   name="arrow_forward"
@@ -138,7 +140,7 @@ export default function HeroSection() {
                   size="text-lg"
                 />
 
-                Track Complaint
+                {t('common.trackComplaint')}
               </button>
             </div>
           </div>
@@ -176,7 +178,7 @@ export default function HeroSection() {
               <div className="relative p-5">
                 <img
                   src="/hero_train.png"
-                  alt="Indian Railway Illustration"
+                  alt={t('landing.portal')}
                   className="w-full h-auto rounded-[2rem] object-cover shadow-lg"
                 />
 
@@ -219,12 +221,11 @@ export default function HeroSection() {
                           color: GOV_NAVY,
                         }}
                       >
-                        Rail Sahayak
+                        {t('landing.railSahayak')}
                       </p>
 
                       <p className="text-sm text-slate-500 mt-1">
-                        AI-powered multilingual citizen
-                        assistance system.
+                        {t('landing.assistant')}
                       </p>
                     </div>
 
@@ -266,11 +267,11 @@ export default function HeroSection() {
 
               <div>
                 <p className="font-semibold text-slate-800">
-                  Trusted Platform
+                  {t('landing.trusted')}
                 </p>
 
                 <p className="text-xs text-slate-500 mt-1">
-                  Official Railway Support System
+                  {t('landing.officialSupport')}
                 </p>
               </div>
             </div>

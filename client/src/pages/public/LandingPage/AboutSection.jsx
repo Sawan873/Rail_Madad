@@ -1,4 +1,5 @@
 import Icon from '../../../components/common/Icon'
+import { useTranslation } from 'react-i18next'
 
 const GOV_NAVY = '#0f2747'
 const GOV_ORANGE = '#ff6b00'
@@ -42,6 +43,7 @@ const features = [
 ]
 
 export default function AboutSection() {
+  const { t } = useTranslation()
   return (
     <section
       id="about"
@@ -94,7 +96,7 @@ export default function AboutSection() {
                 color: GOV_NAVY,
               }}
             >
-              About The Platform
+              {t('landing.aboutBadge')}
             </span>
           </div>
 
@@ -104,14 +106,14 @@ export default function AboutSection() {
               color: '#0f172a',
             }}
           >
-            Modern Railway
+            {t('landing.aboutTitle')}
             <span
               className="block mt-2"
               style={{
                 color: GOV_NAVY,
               }}
             >
-              Citizen Assistance Platform
+              {t('landing.aboutTitle2')}
             </span>
           </h2>
 
@@ -185,13 +187,13 @@ export default function AboutSection() {
                   color: '#0f172a',
                 }}
               >
-                {feature.title}
+                {t(`landing.${({ 'PNR Status': 'featurePnr', 'File Complaints': 'featureFile', 'AI Analysis': 'featureAi', 'Rail Sahayak': 'featureAssistant', 'Secure Access': 'featureSecure', 'Cloud Uploads': 'featureCloud' })[feature.title]}`)}
               </h3>
 
               {/* DESC */}
 
               <p className="relative z-10 text-slate-500 leading-relaxed text-sm">
-                {feature.desc}
+                {t(`landing.${({ 'PNR Status': 'featurePnrDesc', 'File Complaints': 'featureFileDesc', 'AI Analysis': 'featureAiDesc', 'Rail Sahayak': 'featureAssistantDesc', 'Secure Access': 'featureSecureDesc', 'Cloud Uploads': 'featureCloudDesc' })[feature.title]}`)}
               </p>
             </div>
           ))}
@@ -209,13 +211,13 @@ export default function AboutSection() {
             
             <div>
               <p className="text-sm uppercase tracking-[0.18em] text-blue-200 font-bold">
-                Official Railway Support
+                {t('landing.officialSupport')}
               </p>
 
               <h3 className="text-3xl font-black text-white mt-3 leading-tight">
-                Citizen-First
+                {t('landing.citizenFirst')}
                 <br />
-                Digital Infrastructure
+                {t('landing.infrastructure')}
               </h3>
             </div>
 

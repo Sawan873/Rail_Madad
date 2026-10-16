@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const navItems = [
   { label: 'Home', icon: 'home', path: '/home', fillOnActive: true },
@@ -9,6 +10,7 @@ const navItems = [
 
 export default function BottomNav() {
   const { pathname } = useLocation()
+  const { t } = useTranslation()
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 px-4 pb-4 pt-0 lg:hidden">
@@ -38,7 +40,7 @@ export default function BottomNav() {
                     isActive ? 'text-primary' : 'text-slate-400 dark:text-slate-500'
                   }`}
                 >
-                  {item.label}
+                  {t(`common.${item.label === 'AI' ? 'aiHelp' : item.label.toLowerCase()}`, item.label)}
                 </p>
               </Link>
             )

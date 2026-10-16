@@ -78,7 +78,7 @@ export default function HomeDashboard() {
 
           <div className="flex items-center gap-3">
             <span className="hidden md:block text-[10px] font-bold text-white px-3 py-1.5 rounded-full bg-[#ff6b00] shadow-sm uppercase tracking-wide">
-              Official Portal
+              {t('dashboard.officialPortal')}
             </span>
             <button className="relative flex size-10 items-center justify-center rounded-xl hover:bg-slate-100 text-[#1a3a6b] transition-colors">
               <Icon name="notifications" size="text-[22px]" />
@@ -126,7 +126,7 @@ export default function HomeDashboard() {
             <Icon name="info" size="text-lg" className="text-amber-600" />
           </div>
           <p className="text-sm text-amber-800 font-medium">
-            <strong className="font-bold">Official Notice:</strong> All grievances are acknowledged within 24 hours. Railway Helpline: <strong className="font-bold text-amber-900">139</strong>
+            <strong className="font-bold">{t('dashboard.officialNotice')}</strong> {t('dashboard.noticeText')} <strong className="font-bold text-amber-900">139</strong>
           </p>
         </div>
 
@@ -139,7 +139,7 @@ export default function HomeDashboard() {
             <div className="text-white">
               <p className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/10 text-xs font-semibold uppercase tracking-wider text-blue-100 mb-3 border border-white/10">
                 <Icon name="verified_user" size="text-sm" />
-                {t('nav.citizen')} Account
+                {t('nav.citizen')} {t('dashboard.citizenAccount')}
               </p>
               <h2 className="text-3xl font-bold tracking-tight mb-2">
                 {t('dashboard.welcome')}, {displayUser?.firstName || displayUser?.name || 'Traveler'}
@@ -154,7 +154,7 @@ export default function HomeDashboard() {
               {[
                 { icon: 'pending_actions', value: stats.active.toString(), label: t('dashboard.active'), color: 'text-amber-400' },
                 { icon: 'task_alt', value: stats.resolved.toString(), label: t('dashboard.resolved'), color: 'text-green-400' },
-                { icon: 'assessment', value: stats.total.toString(), label: 'TOTAL', color: 'text-blue-300' },
+                { icon: 'assessment', value: stats.total.toString(), label: t('dashboard.total'), color: 'text-blue-300' },
               ].map(({ icon, value, label, color }) => (
                 <div key={label} className="rounded-xl px-4 py-4 min-w-[110px] bg-white/10 border border-white/10 backdrop-blur-md flex flex-col items-center justify-center text-center transition-transform hover:-translate-y-1">
                   <Icon name={icon} size="text-xl" className={`mb-2 ${color}`} />
@@ -179,7 +179,7 @@ export default function HomeDashboard() {
             {[
               { icon: 'add_a_photo', title: t('dashboard.fileNew'), desc: t('dashboard.fileNewDesc'), btn: t('common.submit'), path: '/file-complaint', iconBg: 'bg-blue-50', iconColor: 'text-[#1a3a6b]' },
               { icon: 'assignment', title: t('dashboard.myComplaints'), desc: t('dashboard.myComplaintsDesc'), btn: t('common.view'), path: '/complaints', iconBg: 'bg-slate-50', iconColor: 'text-slate-600' },
-              { icon: 'confirmation_number', title: t('common.pnrEnquiry'), desc: 'Check train status and seat details', btn: t('common.check'), iconBg: 'bg-amber-50', iconColor: 'text-amber-600' },
+              { icon: 'confirmation_number', title: t('common.pnrEnquiry'), desc: t('dashboard.pnrDesc'), btn: t('common.check'), iconBg: 'bg-amber-50', iconColor: 'text-amber-600' },
               { icon: 'call', title: t('nav.helpline') + ' 139', desc: t('dashboard.helplineDesc'), btn: t('common.callNow'), isCall: true, iconBg: 'bg-orange-50', iconColor: 'text-[#ff6b00]' },
             ].map((item, index) => (
               <div 
@@ -211,10 +211,10 @@ export default function HomeDashboard() {
           <div className="px-5 py-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <span className="size-2.5 rounded-full bg-[#ff6b00]"></span>
-              <h3 className="text-slate-800 text-sm font-bold uppercase tracking-wide">Recent Activity</h3>
+              <h3 className="text-slate-800 text-sm font-bold uppercase tracking-wide">{t('dashboard.recentActivity')}</h3>
             </div>
             <button onClick={() => navigate('/complaints')} className="text-xs font-semibold text-[#1a3a6b] hover:underline flex items-center gap-1">
-              View All <Icon name="arrow_forward" size="text-sm" />
+              {t('dashboard.viewAll')} <Icon name="arrow_forward" size="text-sm" />
             </button>
           </div>
 
@@ -224,7 +224,7 @@ export default function HomeDashboard() {
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
                 <div>
                   <div className="flex items-center gap-2 mb-1.5">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 uppercase tracking-wider">In Progress</span>
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 uppercase tracking-wider">{t('dashboard.inProgress')}</span>
                     <span className="text-xs font-medium text-slate-500">24 May 2026</span>
                   </div>
                   <h4 className="font-bold text-slate-800 text-lg">Cleanliness Issue · Coach B4</h4>
@@ -237,7 +237,7 @@ export default function HomeDashboard() {
 
               <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
                 <div className="flex items-center justify-between text-xs font-semibold text-slate-700 mb-2.5">
-                  <span>Resolution Progress</span>
+                  <span>{t('dashboard.resolutionProgress')}</span>
                   <span className="text-[#ff6b00]">65%</span>
                 </div>
                 <div className="h-2.5 rounded-full overflow-hidden bg-slate-200 mb-3">
@@ -261,8 +261,8 @@ export default function HomeDashboard() {
                   <h4 className="font-bold text-slate-800 text-base">Seat Allocation Issue · Train 12961</h4>
                   <p className="text-sm font-medium text-slate-500 mt-0.5">ID: RM-2025-41183 · Resolved by TTE</p>
                 </div>
-                <button className="self-start sm:self-auto px-4 py-2 rounded-lg bg-white border border-slate-200 text-xs font-semibold text-slate-600 shadow-sm hover:bg-slate-50 transition-colors">
-                  View Details
+                  <button className="self-start sm:self-auto px-4 py-2 rounded-lg bg-white border border-slate-200 text-xs font-semibold text-slate-600 shadow-sm hover:bg-slate-50 transition-colors">
+                  {t('dashboard.viewDetails')}
                 </button>
               </div>
             </div>

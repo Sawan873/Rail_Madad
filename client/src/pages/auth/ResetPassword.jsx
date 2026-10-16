@@ -4,8 +4,10 @@ import { AuthLayout } from '../../components/layout'
 import { InputField } from '../../components/common'
 import { api } from '../../services/api'
 import Icon from '../../components/common/Icon'
+import { useTranslation } from 'react-i18next'
 
 export default function ResetPassword() {
+  const { t } = useTranslation()
   const { token } = useParams()
   const navigate = useNavigate()
   const [formData, setFormData] = useState({ newPassword: '', confirmPassword: '' })
@@ -31,11 +33,11 @@ export default function ResetPassword() {
     const nextErrors = { newPassword: '', confirmPassword: '', server: '' }
 
     if (!formData.newPassword || formData.newPassword.length < 8) {
-      nextErrors.newPassword = 'Password must be at least 8 characters long.'
+      nextErrors.newPassword = t('auth.passwordTooShort', 'Password must be at least 8 characters long.')
     }
 
     if (formData.confirmPassword !== formData.newPassword) {
-      nextErrors.confirmPassword = 'Passwords do not match.'
+      nextErrors.confirmPassword = t('auth.passwordMismatch', 'Passwords do not match.')
     }
 
     setErrors(nextErrors)
@@ -54,9 +56,9 @@ export default function ResetPassword() {
       setSuccess(true)
     } catch (err) {
       if (err.status === 400 || /invalid|expired/i.test(err.message)) {
-        setErrors((prev) => ({ ...prev, server: 'Reset link is invalid or has expired.' }))
+        setErrors((prev) => ({ ...prev, server: t('auth.invalidResetLink', 'Reset link is invalid or has expired.') }))
       } else {
-        setErrors((prev) => ({ ...prev, server: 'Something went wrong. Try again.' }))
+        setErrors((prev) => ({ ...prev, server: t('auth.tryAgain', 'Something went wrong. Try again.') }))
       }
     } finally {
       setLoading(false)
@@ -72,15 +74,15 @@ export default function ResetPassword() {
       {!success ? (
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div className="hidden lg:block mb-2">
-            <h2 className="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">Set New Password</h2>
-            <p className="text-slate-500 text-sm mt-1">Enter a strong new password and confirm it below.</p>
+            <h2 className="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">{t('auth.Set New Password')}</h2>
+            <p className="text-slate-500 text-sm mt-1">{t('auth.Choose a secure password and confirm it to update your account.')}</p>
           </div>
 
           <InputField
-            label="New Password"
+            label={t('auth.newPassword')}
             icon="lock"
             type={showNewPassword ? 'text' : 'password'}
-            placeholder="Enter new password"
+            placeholder={t('auth.newPasswordPlaceholder')}
             value={formData.newPassword}
             onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
             required
@@ -97,10 +99,10 @@ export default function ResetPassword() {
           {errors.newPassword && <p className="text-sm text-red-600 dark:text-red-400">{errors.newPassword}</p>}
 
           <InputField
-            label="Confirm Password"
+            label={t('auth.confirmPassword')}
             icon="lock"
             type={showConfirmPassword ? 'text' : 'password'}
-            placeholder="Confirm new password"
+            placeholder={t('auth.confirmPasswordPlaceholder')}
             value={formData.confirmPassword}
             onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
             required
@@ -129,12 +131,12 @@ export default function ResetPassword() {
               className={`btn-primary h-14 text-base w-full flex items-center justify-center gap-2 transition-all duration-200 active:scale-95 shadow-glow ${loading ? 'opacity-70 pointer-events-none' : ''}`}
             >
               {loading ? <Icon name="autorenew" className="animate-spin" size="text-xl" /> : <Icon name="lock_reset" fill size="text-xl" />}
-              Reset Password
+              {t('auth.resetPassword')}
             </button>
           </div>
 
           <div className="mt-4 text-sm text-slate-500 dark:text-slate-400 text-right">
-            <Link to="/forgot-password" className="font-semibold hover:text-primary transition-colors">Request a new one →</Link>
+            <Link to="/forgot-password" className="font-semibold hover:text-primary transition-colors">{t('auth.requestNew')} →</Link>
           </div>
         </form>
       ) : (
@@ -145,14 +147,14 @@ export default function ResetPassword() {
                 <Icon name="check_circle" size="text-3xl" />
               </div>
               <div>
-                <h2 className="text-lg font-bold">Password reset successfully!</h2>
-                <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">You will be redirected to login shortly.</p>
+                <h2 className="text-lg font-bold">{t('auth.resetPassword')}!</h2>
+                <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">{t('auth.redirectLogin', 'You will be redirected to login shortly.')}</p>
               </div>
             </div>
           </div>
 
           <div className="mt-4 text-sm text-slate-500 dark:text-slate-400 text-right">
-            <Link to="/login" className="font-semibold hover:text-primary transition-colors">Back to Login</Link>
+            <Link to="/login" className="font-semibold hover:text-primary transition-colors">{t('auth.backToLogin')}</Link>
           </div>
         </div>
       )}

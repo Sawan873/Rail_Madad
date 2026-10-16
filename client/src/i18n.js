@@ -22,6 +22,12 @@ i18n
   .init({
     resources,
     fallbackLng: 'en',
+    supportedLngs: ['en', 'hi', 'ur', 'gu', 'mr'],
+    load: 'languageOnly',
+    detection: {
+      order: ['localStorage', 'navigator', 'htmlTag'],
+      caches: ['localStorage'],
+    },
     interpolation: {
       escapeValue: false // React already escapes by default
     }
@@ -38,5 +44,12 @@ i18n.on('languageChanged', (lng) => {
     document.body.style.fontFamily = "'Noto Sans', sans-serif";
   }
 });
+
+const initialLanguage = i18n.resolvedLanguage || i18n.language || 'en';
+document.documentElement.lang = initialLanguage;
+document.documentElement.dir = initialLanguage === 'ur' ? 'rtl' : 'ltr';
+document.body.style.fontFamily = initialLanguage === 'ur'
+  ? "'Noto Nastaliq Urdu', serif"
+  : "'Noto Sans', sans-serif";
 
 export default i18n;

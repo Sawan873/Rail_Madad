@@ -1,41 +1,43 @@
 import { useNavigate } from 'react-router-dom'
 import Icon from '../../../components/common/Icon'
+import { useTranslation } from 'react-i18next'
 
 const GOV_NAVY = '#0f2747'
 const GOV_ORANGE = '#ff6b00'
 
 export default function Footer() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const footerSections = [
     {
-      title: 'Citizen Services',
+      title: t('landing.citizenServices'),
 
       links: [
         {
-          label: 'File Complaint',
+          label: t('common.fileComplaint'),
           path: '/file-complaint',
         },
 
         {
-          label: 'Track Complaint',
+          label: t('common.trackComplaint'),
           path: '/track',
         },
 
         {
-          label: 'FAQ',
+          label: t('common.faq'),
           path: '/faq',
         },
 
         {
-          label: 'Privacy Policy',
+          label: t('common.privacyPolicy'),
           path: '/privacy',
         },
       ],
     },
 
     {
-      title: 'Railway Services',
+      title: t('landing.railwayServices'),
 
       links: [
         {
@@ -55,7 +57,7 @@ export default function Footer() {
         },
 
         {
-          label: 'Rail Madad',
+          label: 'Rail Madad (In Progess)',
           external:
             'https://railmadad.indianrailways.gov.in/',
         },
@@ -63,7 +65,7 @@ export default function Footer() {
     },
 
     {
-      title: 'Government Portals',
+      title: t('landing.governmentPortals'),
 
       links: [
         {
@@ -127,18 +129,18 @@ export default function Footer() {
       {/* MAIN */}
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 lg:px-6 py-14">
-        
+
         {/* TOP SECTION */}
 
         <div className="grid lg:grid-cols-[1.3fr_2fr] gap-12 pb-12 border-b border-white/10">
-          
+
           {/* LEFT */}
 
           <div>
             {/* BRAND */}
 
             <div className="flex items-center gap-5">
-              
+
               <div className="flex items-center gap-4">
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg"
@@ -155,15 +157,7 @@ export default function Footer() {
                 />
               </div>
 
-              <div>
-                <h2 className="text-2xl font-black tracking-tight">
-                  Rail Madad
-                </h2>
 
-                <p className="text-xs uppercase tracking-[0.22em] text-blue-200 font-semibold mt-1">
-                  Ministry of Railways
-                </p>
-              </div>
             </div>
 
             {/* DESCRIPTION */}
@@ -176,7 +170,7 @@ export default function Footer() {
             {/* BADGES */}
 
             <div className="flex flex-wrap gap-3 mt-6">
-              
+
               <div
                 className="flex items-center gap-2 px-4 py-2 rounded-xl"
                 style={{
@@ -239,7 +233,7 @@ export default function Footer() {
               }}
             >
               <div className="flex items-center gap-4">
-                
+
                 <div
                   className="size-14 rounded-2xl flex items-center justify-center"
                   style={{
@@ -275,7 +269,7 @@ export default function Footer() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
             {footerSections.map(section => (
               <div key={section.title}>
-                
+
                 <h3 className="text-sm font-black uppercase tracking-[0.18em] text-white mb-5">
                   {section.title}
                 </h3>
@@ -320,7 +314,7 @@ export default function Footer() {
 
         <div className="py-10 border-b border-white/10">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 items-center">
-            
+
             {[
               {
                 label: 'Indian Railways',
@@ -387,17 +381,17 @@ export default function Footer() {
         {/* BOTTOM */}
 
         <div className="pt-8 flex flex-col lg:flex-row items-center justify-between gap-5">
-          
+
           <p className="text-xs text-slate-400 text-center lg:text-left leading-relaxed">
             © 2026 Rail Madad. All Rights Reserved.
             <br className="hidden sm:block" />
-            Ministry of Railways, Government of India.
+            Government of India.
           </p>
 
           {/* QUICK BOTTOM LINKS */}
 
           <div className="flex flex-wrap items-center justify-center gap-4 text-xs">
-            
+
             {[
               {
                 label: 'Terms & Conditions',
