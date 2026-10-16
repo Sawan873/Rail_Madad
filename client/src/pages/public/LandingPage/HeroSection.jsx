@@ -1,11 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import Icon from '../../../components/common/Icon'
+import { useTranslation } from 'react-i18next'
 
 const GOV_NAVY = '#1a3a6b'
 const GOV_ORANGE = '#ff6b00'
 
 export default function HeroSection() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   return (
     <section
@@ -67,7 +69,7 @@ export default function HeroSection() {
                   color: GOV_NAVY,
                 }}
               >
-                Official Railway Grievance Portal
+                {t('landing.badge')}
               </span>
             </div>
 
@@ -106,10 +108,7 @@ export default function HeroSection() {
             {/* SUBTEXT */}
 
             <p className="text-base sm:text-lg text-slate-500 leading-relaxed mt-7 max-w-2xl mx-auto lg:mx-0">
-              A modern citizen-first railway grievance platform
-              for Indian Railways. File complaints, upload
-              evidence, track complaint status, and receive
-              intelligent assistance through Rail Sahayak.
+              {t('landing.heroBody')}
             </p>
 
             {/* ACTION BUTTONS */}
@@ -129,7 +128,7 @@ export default function HeroSection() {
                   size="text-lg"
                 />
 
-                File Complaint
+                {t('common.fileComplaint')}
 
                 <Icon
                   name="arrow_forward"
@@ -153,7 +152,7 @@ export default function HeroSection() {
                   size="text-lg"
                 />
 
-                Track Complaint
+                {t('common.trackComplaint')}
               </button>
             </div>
 
@@ -163,19 +162,19 @@ export default function HeroSection() {
               {[
                 {
                   value: '24×7',
-                  label: 'Support',
+                    label: t('landing.support'),
                   icon: 'support_agent',
                 },
 
                 {
                   value: 'AI',
-                  label: 'Powered',
+                    label: t('landing.powered'),
                   icon: 'smart_toy',
                 },
 
                 {
                   value: 'Fast',
-                  label: 'Resolution',
+                    label: t('landing.resolution'),
                   icon: 'bolt',
                 },
               ].map(({ value, label, icon }) => (
@@ -278,7 +277,7 @@ export default function HeroSection() {
                     </p>
 
                     <p className="text-xs text-blue-200">
-                      Citizen Assistance Portal
+                      {t('landing.portal')}
                     </p>
                   </div>
                 </div>
@@ -290,7 +289,7 @@ export default function HeroSection() {
                     color: '#fff',
                   }}
                 >
-                  LIVE
+                  {t('landing.live')}
                 </div>
               </div>
 
@@ -299,7 +298,7 @@ export default function HeroSection() {
               <div className="relative p-5">
                 <img
                   src="/hero_train.png"
-                  alt="Indian Railway Illustration"
+                  alt={t('landing.portal')}
                   className="w-full h-auto rounded-[2rem] object-cover shadow-lg"
                 />
 
@@ -342,12 +341,11 @@ export default function HeroSection() {
                           color: GOV_NAVY,
                         }}
                       >
-                        Rail Sahayak
+                        {t('landing.railSahayak')}
                       </p>
 
                       <p className="text-sm text-slate-500 mt-1">
-                        AI-powered multilingual citizen
-                        assistance system.
+                        {t('landing.assistant')}
                       </p>
                     </div>
 
@@ -389,11 +387,11 @@ export default function HeroSection() {
 
               <div>
                 <p className="font-semibold text-slate-800">
-                  Trusted Platform
+                  {t('landing.trusted')}
                 </p>
 
                 <p className="text-xs text-slate-500 mt-1">
-                  Official Railway Support System
+                  {t('landing.officialSupport')}
                 </p>
               </div>
             </div>
@@ -423,11 +421,11 @@ export default function HeroSection() {
 
               <div>
                 <p className="font-semibold text-slate-800">
-                  Faster Resolution
+                  {t('landing.faster')}
                 </p>
 
                 <p className="text-xs text-slate-500 mt-1">
-                  AI-assisted grievance workflow
+                  {t('landing.aiWorkflow')}
                 </p>
               </div>
             </div>

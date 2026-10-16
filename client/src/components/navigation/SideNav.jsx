@@ -2,10 +2,12 @@ import { Link, useLocation } from 'react-router-dom'
 import { NAV_ITEMS } from '../../constants/navigation'
 import Icon from '../common/Icon'
 import { useAuth } from '../../context/AuthContext.jsx'
+import { useTranslation } from 'react-i18next'
 
 export default function SideNav({ isOpen, onClose }) {
   const { pathname } = useLocation()
   const { user } = useAuth()
+  const { t } = useTranslation()
 
   return (
     <>
@@ -32,7 +34,7 @@ export default function SideNav({ isOpen, onClose }) {
             <div className="flex-1 min-w-0">
               <p className="text-white font-bold text-base leading-tight tracking-wide">Rail Madad</p>
               <p className="text-[10px] font-semibold uppercase tracking-widest text-blue-200 mt-0.5">
-                Official Portal
+                {t('common.officialPortal')}
               </p>
             </div>
             <button
@@ -55,14 +57,14 @@ export default function SideNav({ isOpen, onClose }) {
             className="w-full h-11 rounded-xl text-sm font-bold flex items-center justify-center gap-2 uppercase tracking-wider text-white bg-[#ff6b00] hover:bg-[#e66000] shadow-sm transition-colors"
           >
             <Icon name="add_circle" fill size="text-lg" />
-            File Complaint
+            {t('common.fileComplaint')}
           </Link>
         </div>
 
         {/* Section Label */}
         <div className="px-5 pt-4 pb-2">
           <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
-            Navigation Menu
+            {t('common.navigationMenu')}
           </p>
         </div>
 
@@ -88,7 +90,7 @@ export default function SideNav({ isOpen, onClose }) {
                     size="text-[20px]"
                   />
                 </div>
-                <span className="flex-1">{item.label}</span>
+                <span className="flex-1">{t(`common.${item.label === 'AI Help' ? 'aiHelp' : item.label.toLowerCase()}`, item.label)}</span>
                 {isActive && (
                   <Icon name="chevron_right" size="text-base" className="text-[#1a3a6b]" />
                 )}
@@ -103,7 +105,7 @@ export default function SideNav({ isOpen, onClose }) {
             <Icon name="call" size="text-lg" className="text-amber-600" />
           </div>
           <div>
-            <p className="text-xs font-bold text-amber-900 mb-0.5">Railway Helpline</p>
+            <p className="text-xs font-bold text-amber-900 mb-0.5">{t('common.railwayHelpline')}</p>
             <p className="text-sm font-black text-amber-700 tracking-wider">139 <span className="text-[10px] font-bold uppercase text-amber-600/80">(24×7)</span></p>
           </div>
         </div>

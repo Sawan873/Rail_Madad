@@ -5,11 +5,13 @@ import { PROFILE_STATS, PROFILE_MENU_SECTIONS } from '../../constants/mockData'
 import { useAuth } from '../../context/AuthContext.jsx'
 import TopUtilityBar from '../../components/common/TopUtilityBar'
 import api from '../../services/api.js'
+import { useTranslation } from 'react-i18next'
 
 const GOV_NAVY   = '#1a3a6b'
 const GOV_ORANGE = '#FF6600'
 
 export default function Profile() {
+  const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const { user, logout } = useAuth()
   const [profileData, setProfileData] = useState(null)
@@ -41,9 +43,9 @@ export default function Profile() {
   const displayUser = profileData || user
 
   const profileStats = [
-    { label: 'Total Filed', value: stats.total,    icon: 'assignment',   accent: GOV_NAVY   },
-    { label: 'Resolved',    value: stats.resolved,  icon: 'check_circle', accent: '#2a7a2a'  },
-    { label: 'Pending',     value: stats.pending,   icon: 'schedule',     accent: '#9a5800'  },
+    { label: t('profile.totalFiled'), value: stats.total,    icon: 'assignment',   accent: GOV_NAVY   },
+    { label: t('complaintList.resolved'),    value: stats.resolved,  icon: 'check_circle', accent: '#2a7a2a'  },
+    { label: t('dashboard.active'),     value: stats.pending,   icon: 'schedule',     accent: '#9a5800'  },
   ]
 
   const handleSignOut = () => { logout(); navigate('/') }
@@ -53,7 +55,7 @@ export default function Profile() {
     : displayUser?.name || 'Traveler'
 
   return (
-    <div style={{ background: '#f0f4f8', fontFamily: "'Noto Sans', sans-serif", minHeight: '100vh' }}>
+    <div style={{ background: '#f0f4f8', fontFamily: i18n.resolvedLanguage === 'ur' ? "'Noto Nastaliq Urdu', serif" : "'Noto Sans', sans-serif", minHeight: '100vh' }}>
 
       <TopUtilityBar />
 
@@ -78,7 +80,7 @@ export default function Profile() {
           >
             <Icon name="arrow_back" size="text-xl" />
           </button>
-          <h2 className="text-white font-bold flex-1 text-center text-sm tracking-wide uppercase">Citizen Profile</h2>
+          <h2 className="text-white font-bold flex-1 text-center text-sm tracking-wide uppercase">{t('profile.title')}</h2>
           <div className="size-9" />
         </div>
 
@@ -100,12 +102,12 @@ export default function Profile() {
             <div className="flex items-center justify-center lg:justify-start gap-2 mb-1">
               <h1 className="text-white text-xl font-bold tracking-tight">{fullName}</h1>
             </div>
-            <p className="text-sm" style={{ color: '#8aa8d5' }}>{displayUser?.email || 'No email provided'}</p>
+            <p className="text-sm" style={{ color: '#8aa8d5' }}>{displayUser?.email || t('profile.noEmail')}</p>
             <div className="flex items-center justify-center lg:justify-start gap-4 mt-3 flex-wrap">
               <div className="flex items-center gap-1.5 text-xs px-3 py-1.5"
                 style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#d0dff0', borderRadius: 8 }}>
                 <Icon name="phone" size="text-xs" />
-                {displayUser?.phoneNumber || 'No phone'}
+                {displayUser?.phoneNumber || t('profile.noPhone')}
               </div>
               <div className="flex items-center gap-1.5 text-xs px-3 py-1.5"
                 style={{ background: 'rgba(255,102,0,0.2)', border: `1px solid rgba(255,102,0,0.4)`, color: '#FFB380', borderRadius: 8 }}>
@@ -153,7 +155,7 @@ export default function Profile() {
                 <div className="flex items-center gap-2 px-4 py-2.5"
                   style={{ background: GOV_NAVY, borderBottom: `2px solid ${GOV_ORANGE}` }}>
                   <span className="size-1.5 rounded-full shrink-0" style={{ background: GOV_ORANGE }} />
-                  <p className="text-[11px] font-semibold uppercase tracking-widest text-white">{section.title}</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-widest text-white">{t(`profile.${section.title.toLowerCase()}`, section.title)}</p>
                 </div>
 
                 <div className="divide-y" style={{ borderColor: '#edf1f7' }}>
@@ -170,7 +172,7 @@ export default function Profile() {
                         style={{ background: '#e8edf8' }}>
                         <Icon name={icon} fill size="text-lg" style={{ color: GOV_NAVY }} />
                       </div>
-                      <p className="flex-1 text-sm font-medium" style={{ color: '#1a1a1a' }}>{label}</p>
+                      <p className="flex-1 text-sm font-medium" style={{ color: '#1a1a1a' }}>{t(`profile.${({ 'Edit Profile': 'editProfile', 'Change Password': 'changePassword', Notifications: 'notifications', 'Help & FAQ': 'helpFaq', 'Privacy Policy': 'privacyPolicy', 'About Rail Madad': 'about' })[label]}`, label)}</p>
                       <Icon name="chevron_right" size="text-base" style={{ color: '#b0bac8' }} />
                     </button>
                   ))}
@@ -183,14 +185,14 @@ export default function Profile() {
           <div style={{ background: '#fff', border: '1px solid #d4dae5' }}>
             <div className="flex items-center gap-2 px-4 py-2.5" style={{ background: GOV_NAVY, borderBottom: `2px solid ${GOV_ORANGE}` }}>
               <span className="size-1.5 rounded-full shrink-0" style={{ background: GOV_ORANGE }} />
-              <p className="text-[11px] font-semibold uppercase tracking-widest text-white">Account Activity</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-widest text-white">{t('profile.accountActivity')}</p>
             </div>
             <div className="grid grid-cols-2 divide-x divide-y" style={{ borderColor: '#edf1f7' }}>
               {[
-                { label: 'Member Since',    value: '12 Jan 2025', icon: 'calendar_today'  },
-                { label: 'Last Login',      value: 'Today, 8:42 PM', icon: 'login'         },
-                { label: 'Account Status',  value: 'Verified',    icon: 'verified_user'  },
-                { label: 'Helpline Calls',  value: '2 calls',     icon: 'call'            },
+                { label: t('profile.memberSince'),    value: '12 Jan 2025', icon: 'calendar_today'  },
+                { label: t('profile.lastLogin'),      value: t('chat.today'), icon: 'login'         },
+                { label: t('profile.accountStatus'),  value: t('profile.verified'),    icon: 'verified_user'  },
+                { label: t('profile.helplineCalls'),  value: '2',     icon: 'call'            },
               ].map(({ label, value, icon }) => (
                 <div key={label} className="flex items-center gap-3 px-4 py-3">
                   <Icon name={icon} size="text-base" style={{ color: GOV_NAVY, flexShrink: 0 }} />
@@ -212,15 +214,15 @@ export default function Profile() {
             onMouseLeave={e => e.currentTarget.style.background = '#fff0f0'}
           >
             <Icon name="logout" size="text-base" />
-            Sign Out of Rail Madad Portal
+            {t('common.signOut')}
           </button>
 
           {/* Footer note */}
           <p className="text-center text-[10px]" style={{ color: '#b0bac8' }}>
             Rail Madad v2.0 · Ministry of Railways, Government of India ·{' '}
-            <span onClick={() => navigate('/privacy')} style={{ color: GOV_NAVY, cursor: 'pointer', fontWeight: 600 }} className="hover:underline">Privacy Policy</span>
+            <span onClick={() => navigate('/privacy')} style={{ color: GOV_NAVY, cursor: 'pointer', fontWeight: 600 }} className="hover:underline">{t('common.privacyPolicy')}</span>
             <span className="mx-1.5 text-slate-300">|</span>
-            <span onClick={() => navigate('/faq')} style={{ color: GOV_NAVY, cursor: 'pointer', fontWeight: 600 }} className="hover:underline">FAQ</span>
+            <span onClick={() => navigate('/faq')} style={{ color: GOV_NAVY, cursor: 'pointer', fontWeight: 600 }} className="hover:underline">{t('common.faq')}</span>
           </p>
         </div>
       </div>

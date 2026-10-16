@@ -4,6 +4,7 @@ import { AuthLayout } from '../../components/layout'
 import { InputField } from '../../components/common'
 import { useAuth } from '../../context/AuthContext'
 import Icon from '../../components/common/Icon'
+import { useTranslation } from 'react-i18next'
 
 const REGISTER_FEATURES = [
   { icon: 'track_changes',  text: 'Track all your complaints live' },
@@ -12,6 +13,7 @@ const REGISTER_FEATURES = [
 ]
 
 export default function CreateAccount() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { register } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
@@ -43,8 +45,8 @@ export default function CreateAccount() {
     >
       <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
         <div className="hidden lg:block mb-2">
-          <h2 className="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">Create Account</h2>
-          <p className="text-slate-500 text-sm mt-1">Fill in your details to get started</p>
+          <h2 className="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">{t('auth.Create Account')}</h2>
+          <p className="text-slate-500 text-sm mt-1">{t('auth.fillDetails')}</p>
         </div>
 
         {error && (
@@ -57,10 +59,10 @@ export default function CreateAccount() {
         <div className="flex flex-col sm:flex-row gap-5">
           <div className="flex-1">
             <InputField
-              label="First Name"
+              label={t('auth.firstName')}
               icon="person"
               type="text"
-              placeholder="First name"
+              placeholder={t('auth.firstName')}
               value={formData.firstName}
               onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
               required
@@ -69,10 +71,10 @@ export default function CreateAccount() {
           </div>
           <div className="flex-1">
             <InputField
-              label="Last Name"
+              label={t('auth.lastName')}
               icon="person"
               type="text"
-              placeholder="Last name"
+              placeholder={t('auth.lastName')}
               value={formData.lastName}
               onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
               required
@@ -81,20 +83,20 @@ export default function CreateAccount() {
           </div>
         </div>
         <InputField
-          label="Phone Number"
+          label={t('auth.phoneNumber')}
           icon="call"
           type="tel"
-          placeholder="10-digit mobile number"
+          placeholder={t('auth.mobilePlaceholder')}
           value={formData.phoneNumber}
           onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
           required
           inputProps={{ autoComplete: 'tel' }}
         />
         <InputField
-          label="Email Address"
+          label={t('auth.emailAddress')}
           icon="mail"
           type="email"
-          placeholder="Enter email address"
+          placeholder={t('auth.emailPlaceholder')}
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           required
@@ -102,10 +104,10 @@ export default function CreateAccount() {
         />
 
         <InputField
-          label="Password"
+          label={t('auth.password')}
           icon="lock"
           type={showPassword ? 'text' : 'password'}
-          placeholder="Create a strong password"
+          placeholder={t('auth.createPassword')}
           value={formData.password}
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
           required
@@ -127,16 +129,16 @@ export default function CreateAccount() {
             disabled={loading}
             className="btn-primary h-14 text-base w-full flex items-center justify-center gap-2 transition-all duration-200 active:scale-95 shadow-glow disabled:opacity-50"
           >
-            {loading ? 'Registering...' : (
+            {loading ? t('auth.registering') : (
               <>
                 <Icon name="how_to_reg" fill size="text-xl" />
-                Register
+                {t('auth.register')}
               </>
             )}
           </button>
           <button type="button" onClick={() => navigate('/login')} className="btn-secondary h-14 text-base w-full flex items-center justify-center gap-2">
             <Icon name="arrow_back" size="text-xl" />
-            Back to Login
+            {t('auth.backToLogin')}
           </button>
         </div>
 

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import Icon from '../common/Icon'
 import TopUtilityBar from '../common/TopUtilityBar'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Split-panel layout for auth pages (Login, Register, Track).
@@ -24,6 +25,7 @@ export default function AuthLayout({
   children,
 }) {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -53,8 +55,8 @@ export default function AuthLayout({
               <Icon name={icon} fill className="text-white" size="text-4xl" />
             )}
           </div>
-          <h1 className="text-white text-3xl lg:text-4xl font-black tracking-tight">{title}</h1>
-          <p className="text-blue-100/80 text-sm mt-2 max-w-xs">{subtitle}</p>
+          <h1 className="text-white text-3xl lg:text-4xl font-black tracking-tight">{t(`auth.${title}`, title)}</h1>
+          <p className="text-blue-100/80 text-sm mt-2 max-w-xs">{t(`auth.${subtitle}`, subtitle)}</p>
 
           {/* Desktop feature bullets */}
           {features.length > 0 && (
@@ -64,7 +66,7 @@ export default function AuthLayout({
                   <div className="size-8 rounded-lg bg-white/15 border border-white/20 flex items-center justify-center shrink-0">
                     <Icon name={featureIcon} fill className="text-white" size="text-base" />
                   </div>
-                  <p className="text-white/80 text-sm">{text}</p>
+                  <p className="text-white/80 text-sm">{t(`auth.${text}`, text)}</p>
                 </div>
               ))}
             </div>
